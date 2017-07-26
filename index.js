@@ -20,6 +20,15 @@ var Paddle = function() {
 	o.rightMove = function() {
 		o.x += o.speed;
 	}
+	// 碰撞检测
+	o.collide = function(b) {
+		if (b.y+b.img.height>o.y) {
+			if (b.x>o.x && b.x<o.x+o.img.width) {
+				return true;
+			}
+		}
+		return false;
+	}
 	return o;
 }
 
@@ -28,31 +37,64 @@ var Ball = function() {
 	var o = {
 		x: 200,
 		y: 100,
-		speed: 5,
+		speedX: 5,
+		speedY: 5,
 		img: img,
 		fired: false,
 	}
-	o.fired = function() {
+	o.fire = function() {
 		o.fired = true;
+	}
+	o.stop = function() {
+		o.fired = false;
+	}
+	o.move = function () {
+		if (o.fired) {
+			if (o.x<0 || o.x>800) {
+				o.speedX *= -1;
+			}
+			if (o.y<0 || o.y>500) {
+				o.speedY *= -1;
+			}
+			o.x += o.speedX;
+			o.y += o.speedY;
+		}
 	}
 	return o;
 }
 
 var Guagame = function() {
 	var g = {
-		actions: [],
-		keys: []
+		actions: {},
+		keys: {}
 	}
 	var canvas = document.getElementById('canvas');
 	var ctx = canvas.getContext('2d');
 	g.canvas = canvas;
 	g.ctx = ctx;
 
+	// events
+	window.addEventListener('keydown', function(event) {
+		g.keys[event.key] = true;
+	});
+	window.addEventListener('keyup', function(event) {
+		g.keys[event.key] = false;
+	});
+	g.registerAction = function(key, callback) {
+		g.actions[key] = callback;
+	}
 
 	setInterval(function() {
-		// move
+		// events
+		var keys = Object.keys(g.actions);
+		for (var i = 0; i < keys.length; i++) {
+			var key = keys[i];
+			if (g.keys[key]) {
+				g.actions[key]();
+			}
+		}
 		g.move();
-		// cleat
+		// clear
 		g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height);
 		// draw
 		g.draw();
@@ -65,29 +107,17 @@ var main = function() {
 	var ball = Ball();
 	var game = Guagame();
 
-	var leftMove = false;
-	var rightMove = false;
-	window.addEventListener('keydown', function(event) {
-		if (event.key == ("A" || "a")) {
-			leftMove = true;
-		} else if (event.key == ("D" || "d")) {
-			rightMove = true;
-		}
-	});
-	window.addEventListener('keyup', function(event) {
-		if (event.key == ("A" || "a")) {
-			leftMove = false;
-		} else if (event.key == ("D" || "d")) {
-			rightMove = false;
-		}
-	});
+	game.registerAction('a', paddle.leftMove);
+	game.registerAction('d', paddle.rightMove);
+	game.registerAction('f', ball.fire);
+	game.registerAction('s', ball.stop);
 
 	game.move = function () {
-		if (leftMove) {
-			paddle.leftMove();
-		} else if (rightMove) {
-			paddle.rightMove();
+		if (paddle.collide(ball)) {
+			ball.speedX *= -1;
+			ball.speedY *= -1;
 		}
+		ball.move();
 	}
 
 	game.draw = function() {
