@@ -6,6 +6,7 @@ var imageFromPath = function(path) {
 	return img;
 }
 
+//碰撞检测
 var collide = function(a, b) {
 	if (b.y>a.y && b.y< a.y+a.img.height) {
 		if (b.x > a.x && b.x < a.x + a.img.width) {
@@ -91,6 +92,7 @@ var Ball = function() {
 			o.y += o.speedY;
 		}
 	}
+	// 反弹
 	o.bounce = function() {
 		o.speedY *= -1;
 	}
@@ -137,6 +139,7 @@ var Guagame = function() {
 		// draw
 		g.draw();
 	}, 1000 / 60)
+	
 	return g;
 }
 
@@ -148,6 +151,7 @@ var main = function() {
 	var blocks = [];
 	for (var i = 0; i < 3; i++) {
 		var block = Block();
+		// 设置坐标
 		block.x += 200*i;
 		blocks.push(block);
 	}
