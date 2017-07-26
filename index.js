@@ -6,6 +6,16 @@ var imageFromPath = function(path) {
 	return img;
 }
 
+var collide = function(a, b) {
+	if (b.y>a.y && b.y< a.y+a.img.height) {
+		if (b.x > a.x && b.x < a.x + a.img.width) {
+			a.alive = false;
+			return true;
+		}
+	}
+	return false;
+}
+
 var Paddle = function() {
 	var img = imageFromPath('./paddle.png')
 	var o = {
@@ -14,20 +24,41 @@ var Paddle = function() {
 		speed: 10,
 		img: img
 	}
+	o.move = function(x) {
+		if (x < 0) {
+			x = 0;
+		} else if (x > 800-o.img.width) {
+			x = 800-o.img.width;
+		}
+		o.x = x;
+	}
 	o.leftMove = function() {
-		o.x -= o.speed;
+		o.move(o.x - o.speed);
 	}
 	o.rightMove = function() {
-		o.x += o.speed;
+		o.move(o.x + o.speed);
 	}
 	// 碰撞检测
 	o.collide = function(b) {
-		if (b.y+b.img.height>o.y) {
-			if (b.x>o.x && b.x<o.x+o.img.width) {
-				return true;
-			}
-		}
-		return false;
+		return collide(o, b) || collide(b, o);
+	}
+	return o;
+}
+
+var Block = function() {
+	var img = imageFromPath('./block.png')
+	var o = {
+		x: 100,
+		y: 50,
+		alive: true,
+		img: img
+	}
+	o.kill = function() {
+		o.alive = false;
+	}
+	// 碰撞检测
+	o.collide = function(b) {
+		return o.alive && collide(o, b)||collide(b, o);
 	}
 	return o;
 }
@@ -48,17 +79,20 @@ var Ball = function() {
 	o.stop = function() {
 		o.fired = false;
 	}
-	o.move = function () {
+	o.move = function() {
 		if (o.fired) {
-			if (o.x<0 || o.x>800) {
+			if (o.x < 0 || o.x > 800) {
 				o.speedX *= -1;
 			}
-			if (o.y<0 || o.y>500) {
+			if (o.y < 0 || o.y > 500) {
 				o.speedY *= -1;
 			}
 			o.x += o.speedX;
 			o.y += o.speedY;
 		}
+	}
+	o.bounce = function() {
+		o.speedY *= -1;
 	}
 	return o;
 }
@@ -72,6 +106,10 @@ var Guagame = function() {
 	var ctx = canvas.getContext('2d');
 	g.canvas = canvas;
 	g.ctx = ctx;
+
+	g.drawImage = function(gua) {
+		g.ctx.drawImage(gua.img, gua.x, gua.y);
+	}
 
 	// events
 	window.addEventListener('keydown', function(event) {
@@ -98,7 +136,7 @@ var Guagame = function() {
 		g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height);
 		// draw
 		g.draw();
-	}, 1000/60)
+	}, 1000 / 60)
 	return g;
 }
 
@@ -107,21 +145,39 @@ var main = function() {
 	var ball = Ball();
 	var game = Guagame();
 
+	var blocks = [];
+	for (var i = 0; i < 3; i++) {
+		var block = Block();
+		block.x += 200*i;
+		blocks.push(block);
+	}
+
 	game.registerAction('a', paddle.leftMove);
 	game.registerAction('d', paddle.rightMove);
 	game.registerAction('f', ball.fire);
 	game.registerAction('s', ball.stop);
 
-	game.move = function () {
-		if (paddle.collide(ball)) {
-			ball.speedY *= -1;
-		}
+	game.move = function() {
 		ball.move();
+		if (paddle.collide(ball)) {
+			ball.bounce();
+		}
+		for (var i = 0; i < blocks.length; i++) {
+			if(blocks[i].collide(ball)) {
+				blocks[i].kill();
+				ball.bounce();
+			}
+		}
 	}
 
 	game.draw = function() {
-		game.ctx.drawImage(paddle.img, paddle.x, paddle.y);
-		game.ctx.drawImage(ball.img, ball.x, ball.y);
+		game.drawImage(paddle);
+		game.drawImage(ball);
+		for (var i = 0; i < blocks.length; i++) {
+			if (blocks[i].alive) {
+				game.drawImage(blocks[i]);
+			}
+		}
 	}
 }
 
