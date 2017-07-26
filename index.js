@@ -1,32 +1,68 @@
 var console = console.log.bind(console);
 
+var imageFromPath = function(path) {
+	var img = new Image();
+	img.src = path;
+	return img;
+}
+
 var Paddle = function() {
-	var img = new Image()
-	img.src = './paddle.png'
+	var img = imageFromPath('./paddle.png')
 	var o = {
 		x: 400,
 		y: 300,
-		speed: 10
+		speed: 10,
+		img: img
 	}
-	o.img = img
+	o.leftMove = function() {
+		o.x -= o.speed;
+	}
+	o.rightMove = function() {
+		o.x += o.speed;
+	}
+	return o;
+}
+
+var Ball = function() {
+	var img = imageFromPath('./ball.png')
+	var o = {
+		x: 200,
+		y: 100,
+		speed: 5,
+		img: img,
+		fired: false,
+	}
+	o.fired = function() {
+		o.fired = true;
+	}
 	return o;
 }
 
 var Guagame = function() {
-	var g = {}
+	var g = {
+		actions: [],
+		keys: []
+	}
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	g.canvas = canvas;
+	g.ctx = ctx;
+
+
 	setInterval(function() {
 		// move
 		g.move();
+		// cleat
+		g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height);
 		// draw
 		g.draw();
-	}, 1000/30)
+	}, 1000/60)
 	return g;
 }
 
 var main = function() {
-	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d');
 	var paddle = Paddle();
+	var ball = Ball();
 	var game = Guagame();
 
 	var leftMove = false;
@@ -48,15 +84,15 @@ var main = function() {
 
 	game.move = function () {
 		if (leftMove) {
-			paddle.x -= paddle.speed;
+			paddle.leftMove();
 		} else if (rightMove) {
-			paddle.x += paddle.speed;
+			paddle.rightMove();
 		}
 	}
 
 	game.draw = function() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.drawImage(paddle.img, paddle.x, paddle.y);
+		game.ctx.drawImage(paddle.img, paddle.x, paddle.y);
+		game.ctx.drawImage(ball.img, ball.x, ball.y);
 	}
 }
 
