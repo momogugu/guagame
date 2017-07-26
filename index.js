@@ -114,7 +114,6 @@ var main = function() {
 
 	game.move = function () {
 		if (paddle.collide(ball)) {
-			ball.speedX *= -1;
 			ball.speedY *= -1;
 		}
 		ball.move();
