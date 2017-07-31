@@ -1,5 +1,6 @@
-var Guagame = function() {
+var Guagame = function(callback) {
 	var g = {
+		scene: null,
 		actions: {},
 		keys: {}
 	}
@@ -8,7 +9,7 @@ var Guagame = function() {
 	g.canvas = canvas;
 	g.ctx = ctx;
 
-	// draw
+	// drawImage
 	g.drawImage = function(gua) {
 		g.ctx.drawImage(gua.img, gua.x, gua.y);
 	}
@@ -23,7 +24,22 @@ var Guagame = function() {
 	g.registerAction = function(key, callback) {
 		g.actions[key] = callback;
 	}
+
+	// draw
+	g.draw = function() {
+		g.scene.draw()
+	}
+
+	//move
+	g.move = function() {
+		g.scene.move()
+	}
+
+	g.replaceScene = function(scene) {
+		g.scene = scene
+	}
 	
+	window.fps = 30;
 	// timer
 	g.runloop = function() {
 		// events
@@ -34,6 +50,7 @@ var Guagame = function() {
 				g.actions[key]();
 			}
 		}
+		//move
 		g.move();
 		// clear
 		g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height);
@@ -45,6 +62,7 @@ var Guagame = function() {
 	}
 
 	setTimeout(function() {
+		g.scene = callback(g)
 		g.runloop();
 	}, 1000 / window.fps)
 
