@@ -1,5 +1,5 @@
 var Ball = function() {
-	var img = imageFromPath('./ball.png')
+	var img = imageFromPath('./images/ball.png')
 	var o = {
 		x: 200,
 		y: 100,
@@ -10,9 +10,6 @@ var Ball = function() {
 	}
 	o.fire = function() {
 		o.fired = true;
-	}
-	o.stop = function() {
-		o.fired = false;
 	}
 	o.move = function() {
 		if (o.fired) {

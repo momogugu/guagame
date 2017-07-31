@@ -1,5 +1,5 @@
 var Paddle = function() {
-	var img = imageFromPath('./paddle.png')
+	var img = imageFromPath('./images/paddle.png')
 	var o = {
 		x: 400,
 		y: 400,
@@ -22,7 +22,7 @@ var Paddle = function() {
 	}
 	// 碰撞检测
 	o.collide = function(b) {
-		return collide(o, b) || collide(b, o);
+		return collide(o, b);
 	}
 	return o;
 }

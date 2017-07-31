@@ -1,5 +1,5 @@
 var Block = function(p) {
-	var img = imageFromPath('./block.png')
+	var img = imageFromPath('./images/block.png')
 	var o = {
 		x: p[0],
 		y: p[1],
@@ -17,7 +17,7 @@ var Block = function(p) {
 	}
 	// 碰撞检测
 	o.collide = function(b) {
-		return collide(o, b)||collide(b, o);
+		return collide(o, b);
 	}
 	return o;
 }
