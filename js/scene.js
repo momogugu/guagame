@@ -7,7 +7,6 @@ var Scene = function(game) {
 
 	var score = 0
 	var blocks = [];
-	var paused = false;
 	blocks = levelLoad(1)
 
 	game.registerAction('a', paddle.leftMove);
@@ -32,12 +31,6 @@ var Scene = function(game) {
 	})
 	game.canvas.addEventListener('mouseup', function(event) {
 		draggable = false
-	})
-
-	// 运动帧率变化
-	var range = document.getElementById('range')
-	range.addEventListener('input', function(event) {
-		window.fps = event.target.value
 	})
 
 	s.move = function() {

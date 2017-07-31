@@ -39,7 +39,6 @@ var Guagame = function(callback) {
 		g.scene = scene
 	}
 	
-	window.fps = 30;
 	// timer
 	g.runloop = function() {
 		// events
