@@ -26,8 +26,9 @@ var main = function() {
 	game.registerAction('f', ball.fire);
 
 	window.addEventListener('keydown', function(event) {
+		// log(event)
 		if ([1, 2, 3, 4, 5, 6, 7].includes(Number(event.key))) {
-			levelLoad(Number(event.key));
+			blocks = levelLoad(Number(event.key));
 		}
 		if (event.keyCode == 32) {
 			paused = !paused
