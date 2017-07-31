@@ -7,7 +7,7 @@ var levelLoad = function(n) {
 	var blocks = []
 	for (var i = 0; i < level.length; i++) {
 		block = Block(level[i]);
-		log(block);
+		// log(block);
 		blocks.push(block);
 	}
 	return blocks
@@ -26,12 +26,32 @@ var main = function() {
 	game.registerAction('f', ball.fire);
 
 	window.addEventListener('keydown', function(event) {
-		if ([1,2,3,4,5,6,7].includes(Number(event.key))) {
+		if ([1, 2, 3, 4, 5, 6, 7].includes(Number(event.key))) {
 			levelLoad(Number(event.key));
 		}
 		if (event.keyCode == 32) {
 			paused = !paused
 		}
+	})
+
+	//mouse event
+	var draggable = false;
+	window.addEventListener('mousedown', function(event) {
+		// log(event, ball)
+		var x = event.offsetX
+		var y = event.offsetY
+		// log(true)
+		draggable = ball.hasPoint(x, y)
+	})
+	window.addEventListener('mousemove', function(event) {
+		var x = event.offsetX
+		var y = event.offsetY
+		if (!draggable) return
+		ball.x = x
+		ball.y = y
+	})
+	window.addEventListener('mouseup', function(event) {
+		draggable = false
 	})
 
 	// 运动桢率变化
@@ -47,7 +67,7 @@ var main = function() {
 			ball.bounce();
 		}
 		for (var i = 0; i < blocks.length; i++) {
-			if(blocks[i].collide(ball) && blocks[i].alive) {
+			if (blocks[i].collide(ball) && blocks[i].alive) {
 				blocks[i].kill();
 				ball.bounce();
 			}

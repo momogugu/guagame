@@ -8,6 +8,7 @@ var Guagame = function() {
 	g.canvas = canvas;
 	g.ctx = ctx;
 
+	// draw
 	g.drawImage = function(gua) {
 		g.ctx.drawImage(gua.img, gua.x, gua.y);
 	}
@@ -22,6 +23,8 @@ var Guagame = function() {
 	g.registerAction = function(key, callback) {
 		g.actions[key] = callback;
 	}
+	
+	// timer
 	g.runloop = function() {
 		// events
 		var keys = Object.keys(g.actions);

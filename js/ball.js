@@ -27,5 +27,11 @@ var Ball = function() {
 	o.bounce = function() {
 		o.speedY *= -1;
 	}
+	//
+	o.hasPoint = function(x, y) {
+		var xIn = x >= o.x && x <= o.x+o.img.width
+		var yIn = y >= o.y && y <= o.y + o.img.height
+		return xIn && yIn
+	}
 	return o;
 }
