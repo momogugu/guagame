@@ -11,10 +11,10 @@ class Guagame {
 		// events
 		window.addEventListener('keydown', (event) => {
 			this.keys[event.key] = true;
-		});
+		})
 		window.addEventListener('keyup', (event) => {
 			this.keys[event.key] = false;
-		});
+		})
 		this.init()
 	}
 	static instance(...args) {
@@ -44,21 +44,21 @@ class Guagame {
 	runloop() {
 		var g = this;
 		// events
-		var keys = Object.keys(g.actions);
+		var keys = Object.keys(g.actions)
 		for (var i = 0; i < keys.length; i++) {
-			var key = keys[i];
+			var key = keys[i]
 			if (g.keys[key]) {
-				g.actions[key]();
+				g.actions[key]()
 			}
 		}
 		//move
-		g.move();
+		g.move()
 		// clear
-		g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height);
+		g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height)
 		// draw
-		g.draw();
+		g.draw()
 		setTimeout(function() {
-			g.runloop();
+			g.runloop()
 		}, 1000/window.fps)
 	}
 	// image import
@@ -69,7 +69,6 @@ class Guagame {
 			h: img.height,
 			image: img
 		}
-		log(img)
 		return image
 	}
 	// init
@@ -83,14 +82,8 @@ class Guagame {
 				var img = new Image()
 				img.src = g.images[name]
 				g.images[name] = img
-				img.onload = function() {
-					log(g.images[name])
-					index ++
-					if (index == names.length) {
-						g.scene = g.callback(g)
-						g.runloop();
-					}
-				}
+				g.scene = g.callback(g)
+				g.runloop()
 			}
 		}, 1000 / window.fps)
 	}
