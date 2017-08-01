@@ -1,4 +1,4 @@
-var Scene = function(game) {
+var Scene_main = function(game) {
 	var s = {
 		g: game
 	}
@@ -19,7 +19,7 @@ var Scene = function(game) {
 		// log(event, ball)
 		var x = event.offsetX
 		var y = event.offsetY
-		// log(true)
+			// log(true)
 		draggable = ball.hasPoint(x, y)
 	})
 	game.canvas.addEventListener('mousemove', function(event) {
@@ -38,7 +38,7 @@ var Scene = function(game) {
 		ball.move();
 		// 判断game over
 		if (ball.y > paddle.y) {
-			var end = Scene_end(game);
+			var end = Scene_end.new(game);
 			game.replaceScene(end);
 		}
 		// 判断ball和paddle相撞
@@ -56,6 +56,8 @@ var Scene = function(game) {
 	}
 
 	s.draw = function() {
+		// game.ctx.fillStyle = "#fdfdfd";
+		// game.ctx.fillRect(0,0,800,500); 
 		game.drawImage(paddle);
 		game.drawImage(ball);
 		// draw blocks

@@ -1,6 +1,6 @@
 var main = function() {
 	var game = Guagame(function(g) {
-		return scene = Scene(g);
+		return scene = Scene_title.new(g);
 	});
 
 	window.fps = 30;
