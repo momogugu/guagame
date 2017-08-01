@@ -6,7 +6,7 @@ var Scene_main = function(game) {
 	var ball = Ball();
 
 	var score = 0
-	var blocks = [];
+	// var blocks = [];
 	blocks = levelLoad(1)
 
 	game.registerAction('a', paddle.leftMove);

@@ -29,5 +29,6 @@ var levelLoad = function(n) {
 		block = Block(level[i]);
 		blocks.push(block);
 	}
+	// log(blocks)
 	return blocks
 }
