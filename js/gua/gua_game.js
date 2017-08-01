@@ -64,12 +64,7 @@ class Guagame {
 	// image import
 	imageByName(name) {
 		var img = this.images[name]
-		var image = {
-			w: img.width,
-			h: img.height,
-			image: img
-		}
-		return image
+		return img
 	}
 	// init
 	init() {
@@ -82,8 +77,13 @@ class Guagame {
 				var img = new Image()
 				img.src = g.images[name]
 				g.images[name] = img
-				g.scene = g.callback(g)
-				g.runloop()
+				img.onload = function() {
+					index ++
+					if (index == names.length) {
+						g.scene = g.callback(g)
+						g.runloop()
+					}
+				}
 			}
 		}, 1000 / window.fps)
 	}

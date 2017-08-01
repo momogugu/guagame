@@ -1,8 +1,8 @@
-class Scene_title extends Scene {
+class SceneTitle extends Scene {
 	constructor(game) {
-		super(game);
+		super(game)
 		game.registerAction('k', () => {
-			var scene = Scene_main(game)
+			var scene = SceneMain.new(game)
 			game.replaceScene(scene)
 		})
 	}

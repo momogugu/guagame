@@ -1,11 +1,11 @@
 var main = function() {
 	var images = {
-		'paddle': './images/paddle.png',
-		'ball': './images/ball.png',
-		'block': './images/block.png',
+		'bg': './images/bg.png',
+		'plane': './images/plane.png',
+		'cloud': './images/cloud.png',
 	}
 	var game = Guagame.instance(images, function(g) {
-		return scene = Scene_title.new(g);
+		return scene = SceneMain.new(g);
 	});
 
 	window.fps = 30;
@@ -13,10 +13,11 @@ var main = function() {
 	window.blocks = []
 	window.addEventListener('keydown', function(event) {
 		// log(event)
-		if ([1, 2, 3, 4, 5, 6, 7].includes(Number(event.key))) {
-			// log(event.key)
-			blocks = levelLoad(game, Number(event.key));
-		}
+		// 关卡载入
+		// if ([1, 2, 3, 4, 5, 6, 7].includes(Number(event.key))) {
+		// 	// log(event.key)
+		// 	blocks = levelLoad(game, Number(event.key));
+		// }
 		//暂停
 		if (event.keyCode == 32) {
 			paused = !paused
