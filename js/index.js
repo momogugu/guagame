@@ -1,5 +1,10 @@
 var main = function() {
-	var game = Guagame.instance(function(g) {
+	var images = {
+		'paddle': './images/paddle.png',
+		'ball': './images/ball.png',
+		'block': './images/block.png',
+	}
+	var game = Guagame.instance(images, function(g) {
 		return scene = Scene_title.new(g);
 	});
 
@@ -10,7 +15,7 @@ var main = function() {
 		// log(event)
 		if ([1, 2, 3, 4, 5, 6, 7].includes(Number(event.key))) {
 			// log(event.key)
-			blocks = levelLoad(Number(event.key));
+			blocks = levelLoad(game, Number(event.key));
 		}
 		//暂停
 		if (event.keyCode == 32) {

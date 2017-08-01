@@ -1,11 +1,13 @@
-var Ball = function() {
-	var img = imageFromPath('./images/ball.png')
+var Ball = function(game) {
+	var img = game.imageByName('ball')
 	var o = {
 		x: 200,
 		y: 100,
+		w: img.w,
+		h: img.h,
 		speedX: 5,
 		speedY: 5,
-		img: img,
+		img: img.image,
 		fired: false,
 	}
 	o.fire = function() {
@@ -29,8 +31,8 @@ var Ball = function() {
 	}
 	//
 	o.hasPoint = function(x, y) {
-		var xIn = x >= o.x && x <= o.x+o.img.width
-		var yIn = y >= o.y && y <= o.y + o.img.height
+		var xIn = x >= o.x && x <= o.x+o.w
+		var yIn = y >= o.y && y <= o.y + o.h
 		return xIn && yIn
 	}
 	return o;

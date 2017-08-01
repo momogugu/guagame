@@ -1,9 +1,10 @@
 class Guagame {
-	constructor(callback) {
+	constructor(images, callback) {
 		this.callback = callback
 		this.scene = null
 		this.actions = {}
 		this.keys = {}
+		this.images = images
 		this.canvas = document.getElementById('canvas')
 		this.ctx = this.canvas.getContext('2d')
 
@@ -16,8 +17,8 @@ class Guagame {
 		});
 		this.init()
 	}
-	static instance(callback) {
-		this.i = this.i || new this(callback)
+	static instance(...args) {
+		this.i = this.i || new this(...args)
 		return this.i
 	}
 	// drawImage
@@ -60,11 +61,37 @@ class Guagame {
 			g.runloop();
 		}, 1000/window.fps)
 	}
+	// image import
+	imageByName(name) {
+		var img = this.images[name]
+		var image = {
+			w: img.width,
+			h: img.height,
+			image: img
+		}
+		log(img)
+		return image
+	}
+	// init
 	init() {
 		var g = this
+		var index = 0;
 		setTimeout(function() {
-			g.scene = g.callback(g)
-			g.runloop();
+			var names = Object.keys(g.images)
+			for (var i = 0; i < names.length; i++) {
+				var name = names[i]
+				var img = new Image()
+				img.src = g.images[name]
+				g.images[name] = img
+				img.onload = function() {
+					log(g.images[name])
+					index ++
+					if (index == names.length) {
+						g.scene = g.callback(g)
+						g.runloop();
+					}
+				}
+			}
 		}, 1000 / window.fps)
 	}
 }

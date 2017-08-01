@@ -12,8 +12,8 @@ var aInb = function(x, x1, x2) {
 
 //碰撞检测
 var collide = function(a, b) {
-	if (aInb(b.y, a.y, a.img.height) || aInb(a.y, b.y, b.img.height)) {
-		if (aInb(b.x, a.x, a.img.width) || aInb(a.x, b.x, b.img.width)) {
+	if (aInb(b.y, a.y, a.h) || aInb(a.y, b.y, b.h)) {
+		if (aInb(b.x, a.x, a.w) || aInb(a.x, b.x, b.w)) {
 			return true;
 		}
 	}
@@ -21,12 +21,12 @@ var collide = function(a, b) {
 }
 
 // 关卡载入
-var levelLoad = function(n) {
+var levelLoad = function(game, n) {
 	n = n - 1;
 	var level = levels[n];
 	var blocks = []
 	for (var i = 0; i < level.length; i++) {
-		block = Block(level[i]);
+		block = Block(game, level[i]);
 		blocks.push(block);
 	}
 	// log(blocks)

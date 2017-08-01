@@ -2,12 +2,12 @@ var Scene_main = function(game) {
 	var s = {
 		g: game
 	}
-	var paddle = Paddle();
-	var ball = Ball();
+	var paddle = Paddle(game);
+	var ball = Ball(game);
 
 	var score = 0
 	// var blocks = [];
-	blocks = levelLoad(1)
+	blocks = levelLoad(game, 1)
 
 	game.registerAction('a', paddle.leftMove);
 	game.registerAction('d', paddle.rightMove);
