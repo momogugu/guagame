@@ -37,3 +37,11 @@ var randomBetween = function(start, end) {
 	var n = Math.random()*(end-start)
 	return Math.floor(n)
 }
+
+const config = {
+	plane_speed: 10,
+	cloud_speed: 5,
+	bullet_speed: 5,
+	enemy_speed: 5,
+	bullet_cooldown: 30,
+}

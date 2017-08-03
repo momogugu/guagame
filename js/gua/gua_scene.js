@@ -7,6 +7,7 @@ class Scene {
 		return new this(game)
 	}
 	move() {
+		if (paused) {return false}
 		var elements = this.elements
 		for (var i = 0; i < elements.length; i++) {
 			var e = elements[i]
