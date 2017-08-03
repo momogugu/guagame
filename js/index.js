@@ -3,6 +3,12 @@ var main = function() {
 		'bg': './images/bg.png',
 		'plane': './images/plane.png',
 		'cloud': './images/cloud.png',
+		'bullet': './images/bullet.png',
+		'enemy0': './images/enemy0.png',
+		'enemy1': './images/enemy1.png',
+		'enemy2': './images/enemy2.png',
+		'enemy3': './images/enemy3.png',
+		'enemy4': './images/enemy4.png',
 	}
 	var game = Guagame.instance(images, function(g) {
 		return scene = SceneMain.new(g);
