@@ -19,6 +19,8 @@ class SceneMain extends Scene {
 		this.addElement(this.plane)
 		this.numberOfEnemies = 10
 		this.addEnemies()
+		var ps = GuaParticleSystem.new(this.game)
+		this.addElement(ps)
 	}
 	setupEvents() {
 		var game = this.game

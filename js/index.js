@@ -9,8 +9,10 @@ var main = function() {
 		'enemy2': './images/enemy2.png',
 		'enemy3': './images/enemy3.png',
 		'enemy4': './images/enemy4.png',
+		'fire': './images/fire.png',
 	}
 	var game = Guagame.instance(images, function(g) {
+		// return scene = SceneTitle.new(g);
 		return scene = SceneMain.new(g);
 	});
 

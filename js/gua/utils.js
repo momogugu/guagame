@@ -34,7 +34,7 @@ var levelLoad = function(game, n) {
 }
 
 var randomBetween = function(start, end) {
-	var n = Math.random()*(end-start)
+	var n = Math.random()*(end-start+1)+start
 	return Math.floor(n)
 }
 

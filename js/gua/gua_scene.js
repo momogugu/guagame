@@ -22,7 +22,7 @@ class Scene {
 		var elements = this.elements
 		for (var i = 0; i < elements.length; i++) {
 			var e = elements[i]
-			this.game.drawImage(e)
+			e.draw()
 		}
 	}
 }

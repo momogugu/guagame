@@ -10,4 +10,7 @@ class GuaImage {
 	static new(...args) {
 		return new this(...args)
 	}
+	draw() {
+		this.game.drawImage(this)
+	}
 }
