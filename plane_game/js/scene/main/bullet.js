@@ -7,7 +7,7 @@ class Bullet extends GuaImage {
 		this.speed = 5
 	}
 	move() {
-		this.speed = config.bullet_speed
+		this.speed = config.bullet_speed.value
 		this.y -= this.speed
 		if (this.y > 600) {
 			this.setup()

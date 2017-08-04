@@ -11,7 +11,6 @@ class GuaImage {
 		return new this(...args)
 	}
 	draw() {
-		log(this)
 		this.game.drawImage(this)
 	}
 }

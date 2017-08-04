@@ -39,9 +39,24 @@ var randomBetween = function(start, end) {
 }
 
 const config = {
-	plane_speed: 10,
-	cloud_speed: 5,
-	bullet_speed: 5,
-	enemy_speed: 5,
-	bullet_cooldown: 30,
+	plane_speed: {
+		text: '飞机速度',
+		value: 10
+	},
+	cloud_speed: {
+		text: '云朵速度',
+		value: 5
+	},
+	bullet_speed: {
+		text: '子弹速度',
+		value: 5
+	},
+	enemy_speed: {
+		text: 'enemy速度',
+		value: 5
+	},
+	bullet_cooldown: {
+		text: '子弹冷却时间',
+		value: 30
+	},
 }
