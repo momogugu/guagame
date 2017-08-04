@@ -7,38 +7,8 @@
 <body>
 	<canvas id="canvas" width="400" height="600" style="border: 1px solid #000"></canvas>
 	<hr>
-	<input type="range" id="range"> 帧率
-	<!-- <div>
-		<label>
-			<input type="range" class="slider" value="10" data-value='config.plane_speed'>
-			飞机速度：<span class="label">10</span>
-		</label>
-	</div>
-	<div>
-		<label>
-			<input type="range" class="slider" value="5" data-value='config.cloud_speed'>
-			cloud速度：<span class="label">5</span>
-		</label>
-	</div>
-	<div>
-		<label>
-			<input type="range" class="slider" value="5" data-value='config.enemy_speed'>
-			敌机速度：<span class="label">5</span>
-		</label>
-	</div>
-	<div>
-		<label>
-			<input type="range" class="slider" value="5" data-value='config.bullet_speed'>
-			子弹速度：<span class="label">5</span>
-		</label>
-	</div>
-	<div>
-		<label>
-			<input type="range" class="slider" value="30" data-value='config.bullet_cooldown'>
-			子弹冷却时间：<span class="label">30</span>
-		</label>
-	</div> -->
 	<p>tips: 按a向左，按d向右，按w向上，按s向下，按空格暂停／继续游戏</p>
+	<input type="range" id="range"> 帧率
 	<!-- gua -->
 	<script type="text/javascript" src="./js/gua/gua_game.js"></script>
 	<script type="text/javascript" src="./js/gua/gua_scene.js"></script>
@@ -57,44 +27,33 @@
 	<!-- 入口 -->
 	<script type="text/javascript" src="./js/index.js"></script>
 	<script type="text/javascript">
+		// 便于调试速度等配置项
 		var listener = (el, eventName, callback) => {
 			el.addEventListener(eventName, event => {
 				callback(event)
 			})
 		}
-		var rangeType = Object.keys(config)
-		for (var i = 0; i < rangeType.length; i++) {
-			var r = rangeType[i]
+		var rangeCreate = function(r) {
 			var div = document.createElement('div')
-			var type = config[r]
-			var html = '<label><input type="range" class="slider" id="'+r+'" value="'+config[r].value+'" data-value="'+ config[r].value +'">'+ config[r].text +'：<span class="label">'+config[r].value+'</span></label>'
+			var value = config[r].value
+			var text = config[r].text
+			var html = '<label><input type="range" class="slider" value="'+value+'">'+ text +'：<span class="label">'+value+'</span></label>'
 			div.innerHTML = html
 			document.body.appendChild(div)
 			var e = div.childNodes[0].childNodes[0]
 			listener(e, 'input', function(event) {
 				var target = event.target
-				var value = target.value
-				config[target.id].value = Number(value)
+				var val = target.value
+				config[r].value = Number(val)
 				var neighbor = target.closest('label').querySelector('.label')
-				neighbor.innerHTML = value
+				neighbor.innerHTML = val
 			})
 		}
-		// var es = document.querySelectorAll('.slider')
-		// // console.log(es)
-		// for (var i = 0; i < es.length; i++) {
-		// 	var e = es[i]
-		// 	// console.log(e)
-		// 	listener(e, 'input', function(event) {
-		// 		var target = event.target
-		// 		var value = target.value
-		// 		var bindVal = target.dataset.value
-		// 		// eval(bindVal+'='+value)
-		// 		log(bindVal)
-		// 		var neighbor = target.closest('label').querySelector('.label')
-		// 		// log(target,neighbor)
-		// 		neighbor.innerHTML = value
-		// 	})
-		// }
+		var rangeType = Object.keys(config)
+		for (var i = 0; i < rangeType.length; i++) {
+			var r = rangeType[i]
+			rangeCreate(r)
+		}
 	</script>
 </body>
 </html>
