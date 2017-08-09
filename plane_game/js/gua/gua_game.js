@@ -10,10 +10,10 @@ class Guagame {
 
 		// events
 		window.addEventListener('keydown', (event) => {
-			this.keys[event.key] = true;
+			this.keys[event.key] = 'down';
 		})
 		window.addEventListener('keyup', (event) => {
-			this.keys[event.key] = false;
+			this.keys[event.key] = 'up';
 		})
 		this.init()
 	}
@@ -47,8 +47,11 @@ class Guagame {
 		var keys = Object.keys(g.actions)
 		for (var i = 0; i < keys.length; i++) {
 			var key = keys[i]
-			if (g.keys[key]) {
-				g.actions[key]()
+			if (g.keys[key] == 'down') {
+				g.actions[key]('down')
+			} else if (g.keys[key] == 'up') {
+				g.actions[key]('up')
+				g.keys[key] = null
 			}
 		}
 		//move
