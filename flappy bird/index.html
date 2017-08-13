@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>打你打你再打你的小游戏</title>
+</head>
+<body>
+	<canvas id="canvas" width="280" height="500" style="border: 1px solid #000"></canvas>
+	<hr>
+	<p>tips: 按a向左，按d向右，按w向上，按s向下，按空格暂停／继续游戏</p>
+	<input type="range" id="range"> 帧率
+	<!-- gua -->
+	<script type="text/javascript" src="./js/gua/gua_game.js"></script>
+	<script type="text/javascript" src="./js/gua/gua_scene.js"></script>
+	<script type="text/javascript" src="./js/gua/gua_image.js"></script>
+	<script type="text/javascript" src="./js/gua/gua_animation.js"></script>
+	<script type="text/javascript" src="./js/gua/utils.js"></script>
+	<!-- 场景抽象 -->
+	<script type="text/javascript" src="./js/scene/title/scene_title.js"></script>
+	<!-- <script type="text/javascript" src="./js/scene/end/scene_end.js"></script> -->
+	<script type="text/javascript" src="./js/scene/main/pipes.js"></script>
+	<script type="text/javascript" src="./js/scene/main/bird.js"></script>
+	<script type="text/javascript" src="./js/scene/main/scene.js"></script>
+	<!-- 入口 -->
+	<script type="text/javascript" src="./js/index.js"></script>
+	<script type="text/javascript">
+		// 便于调试速度等配置项
+		var listener = (el, eventName, callback) => {
+			el.addEventListener(eventName, event => {
+				callback(event)
+			})
+		}
+		var rangeCreate = function(r) {
+			var div = document.createElement('div')
+			var value = config[r].value
+			var text = config[r].text
+			var html = '<label><input type="range" class="slider" value="'+value+'">'+ text +'：<span class="label">'+value+'</span></label>'
+			div.innerHTML = html
+			document.body.appendChild(div)
+			var e = div.childNodes[0].childNodes[0]
+			listener(e, 'input', function(event) {
+				var target = event.target
+				var val = target.value
+				config[r].value = Number(val)
+				var neighbor = target.closest('label').querySelector('.label')
+				neighbor.innerHTML = val
+			})
+		}
+		var rangeType = Object.keys(config)
+		for (var i = 0; i < rangeType.length; i++) {
+			var r = rangeType[i]
+			rangeCreate(r)
+		}
+	</script>
+</body>
+</html>
